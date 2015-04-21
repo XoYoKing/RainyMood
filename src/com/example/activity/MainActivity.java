@@ -1,14 +1,11 @@
-package com.example.rainymood;
+package com.example.activity;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -16,7 +13,12 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import com.example.receiver.AlarmReceiver;
+
+import com.example.rainymood.R;
+import com.example.service.CounterService;
+import com.example.service.PlayService;
+import com.example.util.ActivityCollector;
+import com.example.util.AppConstant;
 
 
 public class MainActivity extends Activity implements OnClickListener{
@@ -24,8 +26,6 @@ public class MainActivity extends Activity implements OnClickListener{
 	private ImageView counter;
 	private ImageView about;
 	private TextView clockTextView;
-	private MediaPlayer thunder_mediaPlayer;
-	private MediaPlayer rain_meMediaPlayer;
 	private SeekBar rainBar;
 	private SeekBar thunderBar;
 	private AudioManager audioManager;
@@ -33,40 +33,12 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ActivityCollector.addActivity(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		init_Buttonand_other();
 		setonClickListener();
-		playThunder();
-		playRain();
-		
-		
-		
-	}
-	private void playThunder()
-	{
-		thunder_mediaPlayer = MediaPlayer.create(this, R.raw.thunder);
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				thunder_mediaPlayer.start();
-				thunder_mediaPlayer.setLooping(true);
-			}
-		}).start();
-	}
-	private void playRain()
-	{
-		rain_meMediaPlayer = MediaPlayer.create(this, R.raw.rain);
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				rain_meMediaPlayer.start();
-				rain_meMediaPlayer.setLooping(true);
-			}
-		}).start();
+		playMusic();
 	}
 	
 	private void init_Buttonand_other()
@@ -92,33 +64,32 @@ public class MainActivity extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.playorstop:
-//			if (playorstopButton.getDrawable().equals(getResources().getDrawable(R.drawable.play))) {
-//				playorstopButton.setImageResource(R.drawable.stop);
-//			}
 			if (playorstopButton.getTag().toString() == "play") {
 				playorstopButton.setTag("stop");
 				playorstopButton.setImageResource(R.drawable.stop);
-				rain_meMediaPlayer.pause();
-				thunder_mediaPlayer.pause();
+				Intent intent = new Intent(this, PlayService.class);
+				intent.putExtra("tag", AppConstant.STOP_MUSIC);
+				startService(intent);
+				
 			}else {
 				playorstopButton.setTag("play");
 				playorstopButton.setImageResource(R.drawable.play);
-				rain_meMediaPlayer.start();
-				thunder_mediaPlayer.start();
+				Intent intent = new Intent(this, PlayService.class);
+				intent.putExtra("tag", AppConstant.PLAY_MUSIC);
+				startService(intent);
 			}
 			
 		break;
 		case R.id.counter_imageview:
 			if (clockTextView.getText().toString() == "off") {
 				clockTextView.setText("1h");
-				AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-				int anHour = 60 * 60 * 1000;
-				long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
-				Intent i = new Intent(this,AlarmReceiver.class);
-				PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
-				manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
+				Intent intent = new Intent(this, CounterService.class);
+				startService(intent);
+				
 			}else {
 				clockTextView.setText("off");
+				Intent intent = new Intent(this, CounterService.class);
+				stopService(intent);
 			}
 		break;
 		case R.id.about:	
@@ -153,8 +124,12 @@ public class MainActivity extends Activity implements OnClickListener{
 					boolean fromUser) {
 				// TODO Auto-generated method stub
 				
-				float percent = (float)(progress*1.0)/maxVolume;	
-				thunder_mediaPlayer.setVolume(percent, percent);
+				float percent = (float)(progress*1.0)/maxVolume;
+				Intent intent = new Intent(MainActivity.this, PlayService.class);
+				intent.putExtra("tag", AppConstant.THUNDER_VOLUME_CHANGE);
+				intent.putExtra("percent", percent);
+				startService(intent);
+				
 				
 			}
 		});
@@ -177,23 +152,29 @@ public class MainActivity extends Activity implements OnClickListener{
 					boolean fromUser) {
 				// TODO Auto-generated method stub
 				float percent = (float)(progress*1.0)/maxVolume;	
-				rain_meMediaPlayer.setVolume(percent, percent);
+				Intent intent = new Intent(MainActivity.this, PlayService.class);
+				intent.putExtra("tag", AppConstant.RAIN_VOLUME_CHANGE);
+				intent.putExtra("percent", percent);
+				startService(intent);
+				
 			}
 		});
-		
-		
 	}
-	
-	
 	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
-		thunder_mediaPlayer.stop();
-		rain_meMediaPlayer.stop();
-		thunder_mediaPlayer.release();
-		rain_meMediaPlayer.release();
+		Log.d("RainyMood", "执行了activity的onDestroy");
+		Intent intent = new Intent(MainActivity.this, PlayService.class);
+		Intent intent2 = new Intent(this, CounterService.class);
+		stopService(intent);
+		stopService(intent2);
 		super.onDestroy();
 	}
-	
+	private void playMusic()
+	{
+		Intent intent = new Intent(MainActivity.this, PlayService.class);
+		intent.putExtra("tag", 0);
+		startService(intent);
+	}
 }
