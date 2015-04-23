@@ -1,4 +1,4 @@
-package com.example.util;
+package com.wenmingvs.rainymood.util;
 
 public class AppConstant {
 	public static final int PLAY_MUSIC = 0;

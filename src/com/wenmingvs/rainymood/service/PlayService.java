@@ -1,11 +1,12 @@
-package com.example.service;
+package com.wenmingvs.rainymood.service;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
-import com.example.rainymood.R;
-import com.example.util.AppConstant;
+
+import com.wenmingvs.rainymood.R;
+import com.wenmingvs.rainymood.util.AppConstant;
 
 public class PlayService extends Service {
 

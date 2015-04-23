@@ -1,6 +1,4 @@
-package com.example.service;
-
-import com.example.receiver.AlarmReceiver;
+package com.wenmingvs.rainymood.service;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -9,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
+
+import com.wenmingvs.rainymood.receiver.AlarmReceiver;
 
 public class CounterService extends Service {
 	private AlarmManager manager;
@@ -23,7 +23,7 @@ public class CounterService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
 		manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		int anHour = 10 * 1000;
+		int anHour = 60 * 60 * 1000;
 		long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
 		Intent i = new Intent(this,AlarmReceiver.class);
 		pi = PendingIntent.getBroadcast(this, 0, i, 0);
