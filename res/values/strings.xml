@@ -10,12 +10,12 @@
     
     <string name="Menu_Imageview1"	>显示新浪微博Logo	</string>
     <string name="Menu_Imageview2"	>显示知乎Logo	  	</string>
-    <string name="Menu_Imageview3"	>显示Github的Logo	</string>
+    
     
     <string name="Textview1"	  	><a href="http://weibo.com/wenmingvs">闭关写代码</a>	</string>
 	<string name="Textview2"	  	><a href="http://www.zhihu.com/people/hong-lou">红楼</a>	</string>	
-	<string name="Textview3"	  	><a href="https://github.com/wenmingvs/RainyMood">wenmingvs</a></string>
 	
+	<string name="advice"	>(点击)给我建议	  	</string>
 	  
 	
 	
@@ -27,7 +27,7 @@
 	<string name="Content_Imageview4">显示暂停的图标	</string>
 	<string name="Content_Imageview5">显示关于的图标	</string>
 	
-	<string name="item1"	  		>1.请务必将此应用加入到一键清理的白名单中，否则会播放错误	</string>
-	<string name="item2"	  		>2.如果你有更精彩的雨声音频，请通过上面的其中一种方式私信我	</string>
-	<string name="item3"	  		>3.本应用全部开源，详细代码与音频资源可以到Github上下载	</string>
+	<string name="item1"	  		>1.请务必将此应用加入到一键清理的白名单中，否则一键清理后会播放错误	</string>
+	<string name="item2"	  		>2.如果你有更精彩的雨声音频或其他睡眠音频，请通过上面的其中一种方式私信我</string>
+	
 </resources>

@@ -3,7 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0000" >
-
+	<LinearLayout
+	        android:id="@+id/miniAdLinearLayout"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:gravity="center_horizontal"/>
     <ImageView
         android:id="@+id/mylogo"
         android:layout_width="80dp"
@@ -98,31 +103,7 @@
                  />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/image3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:contentDescription="@string/Menu_Imageview3"
-                android:src="@drawable/github" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textColor="#FFFFFF"
-                android:id="@+id/github"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/image3"
-                android:text="@string/Textview3"
-                 />
-        </RelativeLayout>
+        
     </LinearLayout>
 	
     <TextView 
@@ -147,22 +128,23 @@
         android:layout_marginTop="5dp"
         android:text="@string/item2"/>
     
-    <TextView 
-        android:id="@+id/item3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:layout_below="@id/item2"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/item3"/>
+    
+	    
+	<Button 
+	    android:id="@+id/advice"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/advice"
+	    android:textSize="14sp"
+	    android:layout_alignParentBottom="true"
+	    android:layout_marginLeft="20dp"
+	    android:layout_marginBottom="10dp"
+	    android:textColor="#FFFFFF"
+	    android:background="#3C3C3C"/>
     
     
     
     
     
     
-    
-
 </RelativeLayout>
