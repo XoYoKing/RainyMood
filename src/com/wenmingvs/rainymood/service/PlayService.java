@@ -3,7 +3,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
-import android.util.Log;
+
 
 import com.wenmingvs.rainymood.R;
 import com.wenmingvs.rainymood.util.AppConstant;
@@ -22,7 +22,7 @@ public class PlayService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
 		flags = START_NOT_STICKY;
-		Log.d("RainyMood", "执行了onstartcommand");
+
 		if (intent != null) {
 			int operation = intent.getIntExtra("tag", 5);
 			switch (operation) {
@@ -83,7 +83,7 @@ public class PlayService extends Service {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-		Log.d("RainyMood", "执行了onDestroy");
+
 		rain_meMediaPlayer.stop();
 		rain_meMediaPlayer.release();
 		thunder_mediaPlayer.stop();

@@ -15,12 +15,13 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import cn.waps.AppConnect;
 
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.update.UmengUpdateAgent;
 import com.wenmingvs.rainymood.R;
 import com.wenmingvs.rainymood.service.CounterService;
 import com.wenmingvs.rainymood.service.PlayService;
@@ -43,17 +44,15 @@ public class MainActivity extends Activity implements OnClickListener{
 	private TextView zhihu;
 	
 	private Button adviceButton;
-	private String ShowAd = "";
+//	private String ShowAd = "";
 	private SlidingMenu mLeftMenu ; 
-	
+	private FeedbackAgent agent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		AppConnect.getInstance("033b920ab379609d1297fda7bcfa8c41","default",this);
 		
-		ShowAd = AppConnect.getInstance(this).getConfig("ShowAd","false");
 		
 		ActivityCollector.addActivity(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -61,6 +60,15 @@ public class MainActivity extends Activity implements OnClickListener{
 		init_Buttonand_other();
 		setonClickListener();
 		playMusic();
+		//获取友盟的在线参数
+//		ShowAd = MobclickAgent.getConfigParams( this, "ShowAd" );
+		//调用友盟的更新接口
+		UmengUpdateAgent.update(this);
+		//初始化友盟的用户反馈界面,后台检查是否有新的来自开发者的回复
+		agent = new FeedbackAgent(this);
+		agent.sync();
+		//发送友盟的统计数据到服务器端
+		MobclickAgent.updateOnlineConfig( this );
 	}
 	
 	private void init_Buttonand_other()
@@ -79,16 +87,6 @@ public class MainActivity extends Activity implements OnClickListener{
 		
 		
 		adviceButton = (Button)findViewById(R.id.advice);
-		
-		//显示迷你广告
-		
-		if (ShowAd.equals("true")) {
-			LinearLayout miniLayout = (LinearLayout) findViewById(R.id.miniAdLinearLayout);
-			AppConnect.getInstance(this).showMiniAd(this, miniLayout, 10);// 10秒刷新一次
-		}
-		
-		
-		
 		
 		weibo.setMovementMethod(LinkMovementMethod.getInstance());
 		zhihu.setMovementMethod(LinkMovementMethod.getInstance());
@@ -147,20 +145,15 @@ public class MainActivity extends Activity implements OnClickListener{
 				
 			}
 		break;
-		case R.id.about:
-			
-			if (ShowAd.equals("true")) {
-				vibrate_1s();
-				AppConnect.getInstance(this).showOffers(this);
-			}else {
+		case R.id.about:			
 				vibrate_1s();
 				mLeftMenu.toggle();
-			}
 		break;
 
 		case R.id.advice:
 			vibrate_1s();
-			AppConnect.getInstance(this).showFeedback(this);
+			
+			agent.startFeedbackActivity();
 		
 		}
 	}
@@ -171,7 +164,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		counter.setOnClickListener(this);
 		about.setOnClickListener(this);
 		adviceButton.setOnClickListener(this);
-			
+		
 		
 		
 		thunderBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -239,7 +232,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		Intent intent2 = new Intent(this, CounterService.class);
 		stopService(intent);
 		stopService(intent2);
-		AppConnect.getInstance(this).close();
+		
 		super.onDestroy();
 	}
 	private void playMusic()
@@ -257,6 +250,20 @@ public class MainActivity extends Activity implements OnClickListener{
 	{
 		Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);  
         vibrator.vibrate(100);  //振动一次
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 	
 }

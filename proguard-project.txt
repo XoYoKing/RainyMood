@@ -50,6 +50,27 @@
 -dontwarn com.nineoldandroids.**
 -keep class com.nineoldandroids.** { *; }
 
+# 忽略混淆友盟的用户反馈的lib包
+-libraryjars libs/com.umeng.fb.5.2.0.jar
+-dontwarn com.umeng.fb.**
+-keep class com.umeng.fb.** { *; }
+
+# 忽略混淆友盟的统计分析的lib包
+-libraryjars libs/com.umeng.analytics.jar
+-dontwarn com.umeng.analytics.**
+-keep class com.umeng.analytics.** { *; }
+
+# 忽略混淆友盟的自动更新的lib包（1）
+-libraryjars libs/com.umeng.update.jar
+-dontwarn com.umeng.update.**
+-keep class ccom.umeng.update.** { *; }
+# 忽略混淆友盟的自动更新的lib包（2）
+-libraryjars libs/com.alimama.mobile.jar
+-dontwarn com.alimama.mobile.**
+-keep class com.alimama.mobile.** { *; }
+
+
+
 
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
