@@ -2,130 +2,120 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background" >
 
-        <com.wenmingvs.rainymood.seekbarview.SeekbarArea
-            android:id="@+id/seekbar_area" 
+    <com.wenmingvs.rainymood.seekbarview.SeekbarArea
+        android:id="@+id/seekbar_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/rain_Linearlayout"
             android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="vertical"
-		    
-		    android:layout_centerInParent="true">
-            
-            	<LinearLayout
-		        android:id="@+id/rain_Linearlayout" 
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="40dp"
-		        android:layout_marginRight="40dp"
-		        android:layout_marginBottom="10dp"
-		        android:orientation="horizontal"
-		        android:layout_centerInParent="true">
-		
-		        <ImageView
-		            android:layout_width="70dp"
-		            android:layout_height="70dp"           
-		            android:scaleType="fitCenter"
-		            android:contentDescription="@string/Content_Imageview1"
-		            android:src="@drawable/rain" />
-		
-		        <SeekBar
-		            android:id="@+id/rain_seekbar"
-		            android:layout_width="0dp"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center"
-		            
-		            android:layout_weight="1" />
-		        
-		    	</LinearLayout>
-		    
-			    <LinearLayout 
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:layout_centerInParent="true"
-			        android:layout_marginLeft="40dp"
-			        android:layout_marginRight="40dp"
-			        android:orientation="horizontal"
-			        android:layout_below="@id/rain_Linearlayout">
-			        
-			        <ImageView
-			            android:layout_width="70dp"
-			            android:layout_height="70dp"
-			            android:scaleType="fitCenter"
-			            android:contentDescription="@string/Content_Imageview2"
-			            android:src="@drawable/thunder" />
-			        
-			        <SeekBar
-			            android:id="@+id/thunder_seekbar"
-			            android:layout_width="0dp"
-			            android:layout_height="wrap_content"
-			            android:layout_gravity="center"
-			           
-			            android:layout_weight="1" />
-			        
-			    </LinearLayout>
-             
-        </com.wenmingvs.rainymood.seekbarview.SeekbarArea>
-        		    
-			    <LinearLayout 
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:layout_alignParentBottom="true"
-			        android:layout_marginBottom="30dp"
-			        android:orientation="horizontal">
-			        
-			        <LinearLayout
-			            android:layout_width="0dp"
-			            android:layout_height="wrap_content"
-			            android:layout_weight="2"
-			            android:layout_marginBottom="20dp"
-			            android:orientation="horizontal" >
-			        
-			           <ImageView
-			               android:id="@+id/counter_imageview"
-			               android:layout_width="50dp"
-			               android:layout_height="50dp"
-			               android:layout_marginLeft="25dp"
-			               android:contentDescription="@string/Content_Imageview3"
-			               android:clickable="true"
-			               android:scaleType="fitCenter"
-			               android:src="@drawable/counter" />
-			
-			           <TextView
-			               android:id="@+id/counter_text"
-			               style="@style/AppTheme"
-			               android:layout_width="wrap_content"
-			               android:layout_height="wrap_content"
-			               android:layout_gravity="bottom"
-			               android:text="@string/Content_Textview3"
-			               android:textSize="20sp"
-			               android:textStyle="bold" />
-			
-			        </LinearLayout>
-			        
-			         
-			        <ImageView 
-			            android:id="@+id/playorstop"
-			            android:layout_width="50dp"
-			            android:layout_height="50dp"
-			            android:scaleType="fitCenter"
-			            android:layout_weight="1"
-			            android:clickable="true"
-			            android:contentDescription="@string/Content_Imageview4"
-			            android:tag="play"
-			            android:src="@drawable/stop"/>
-			        <ImageView 
-			            android:id="@+id/about"
-			            android:layout_width="50dp"
-			            android:layout_height="50dp"
-			            android:scaleType="fitCenter"
-			            android:layout_weight="1"
-			            android:clickable="true"
-			            android:contentDescription="@string/Content_Imageview5"
-			            android:src="@drawable/about"/>
-			        
-			    </LinearLayout>
-			    
-	
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:contentDescription="@string/Content_Imageview1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rain" />
+
+            <SeekBar
+                android:id="@+id/rain_seekbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rain_Linearlayout"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:contentDescription="@string/Content_Imageview2"
+                android:scaleType="fitCenter"
+                android:src="@drawable/thunder" />
+
+            <SeekBar
+                android:id="@+id/thunder_seekbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </com.wenmingvs.rainymood.seekbarview.SeekbarArea>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="2"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/counter_imageview"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="25dp"
+                android:clickable="true"
+                android:contentDescription="@string/Content_Imageview3"
+                android:scaleType="fitCenter"
+                android:src="@drawable/counter" />
+
+            <TextView
+                android:id="@+id/counter_text"
+                style="@style/AppTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="@string/Content_Textview3"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/playorstop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/Content_Imageview4"
+            android:scaleType="fitCenter"
+            android:src="@drawable/stop"
+            android:tag="play" />
+
+        <ImageView
+            android:id="@+id/about"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/Content_Imageview5"
+            android:scaleType="fitCenter"
+            android:src="@drawable/about" />
+    </LinearLayout>
 
 </RelativeLayout>
