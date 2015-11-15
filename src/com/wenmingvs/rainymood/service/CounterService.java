@@ -13,6 +13,7 @@ import com.wenmingvs.rainymood.receiver.AlarmReceiver;
 public class CounterService extends Service {
 	private AlarmManager manager;
 	private PendingIntent pi;
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
@@ -25,7 +26,7 @@ public class CounterService extends Service {
 		manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		int anHour = 60 * 60 * 1000;
 		long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
-		Intent i = new Intent(this,AlarmReceiver.class);
+		Intent i = new Intent(this, AlarmReceiver.class);
 		pi = PendingIntent.getBroadcast(this, 0, i, 0);
 		manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
 		return super.onStartCommand(intent, flags, startId);
@@ -37,6 +38,5 @@ public class CounterService extends Service {
 		manager.cancel(pi);
 		super.onDestroy();
 	}
-	
-	
+
 }

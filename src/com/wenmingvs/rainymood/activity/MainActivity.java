@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -25,15 +26,16 @@ import com.wenmingvs.rainymood.service.CounterService;
 import com.wenmingvs.rainymood.service.PlayService;
 import com.wenmingvs.rainymood.slidingmenu.SlidingMenu;
 import com.wenmingvs.rainymood.util.ActivityCollector;
-import com.wenmingvs.rainymood.util.AppConstant;
+import com.wenmingvs.rainymood.util.Const;
+import com.wenmingvs.rainymood.util.MySeekBar;
 
 public class MainActivity extends Activity implements OnClickListener {
 	private ImageView playorstopButton;
 	private ImageView counter;
 	private ImageView about;
 	private TextView clockTextView;
-	private SeekBar rainBar;
-	private SeekBar thunderBar;
+	private MySeekBar rainBar;
+	private MySeekBar thunderBar;
 	private AudioManager audioManager;
 	private int maxVolume;
 
@@ -51,6 +53,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		ActivityCollector.addActivity(this);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
 		init_Buttonand_other();
 		setonClickListener();
@@ -72,14 +76,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		counter = (ImageView) findViewById(R.id.counter_imageview);
 		about = (ImageView) findViewById(R.id.about);
 		clockTextView = (TextView) findViewById(R.id.counter_text);
-		rainBar = (SeekBar) findViewById(R.id.rain_seekbar);
-		thunderBar = (SeekBar) findViewById(R.id.thunder_seekbar);
+		rainBar = (MySeekBar) findViewById(R.id.rain_seekbar);
+		thunderBar = (MySeekBar) findViewById(R.id.thunder_seekbar);
 		mLeftMenu = (SlidingMenu) findViewById(R.id.id_menu);
 		weibo = (TextView) findViewById(R.id.weibo);
 		zhihu = (TextView) findViewById(R.id.zhihu);
-
 		adviceButton = (Button) findViewById(R.id.advice);
-
 		weibo.setMovementMethod(LinkMovementMethod.getInstance());
 		zhihu.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -104,26 +106,20 @@ public class MainActivity extends Activity implements OnClickListener {
 				playorstopButton.setTag("stop");
 				playorstopButton.setImageResource(R.drawable.play);
 				Intent intent = new Intent(this, PlayService.class);
-				intent.putExtra("tag", AppConstant.STOP_MUSIC);
+				intent.putExtra("tag", Const.STOP_MUSIC);
 				startService(intent);
 
 			} else {
 				playorstopButton.setTag("play");
 				playorstopButton.setImageResource(R.drawable.stop);
 				Intent intent = new Intent(this, PlayService.class);
-				intent.putExtra("tag", AppConstant.PLAY_MUSIC);
+				intent.putExtra("tag", Const.PLAY_MUSIC);
 				startService(intent);
 			}
 			break;
 		case R.id.counter_imageview:
-			/**
-			 * 熟悉C++的人对于两个字符串比较的代码一定很了解： (string1==string2)
-			 * 但在java中，这个代码即使在两个字符串完全相同的情况下也会返回false 因为 “==” 比较的是内存地址是否相同！！！
-			 * 必须使用java的equal来比较
-			 */
 			vibrate_1s();
 			if (clockTextView.getText().toString().equals("off")) {
-
 				clockTextView.setText("1h");
 				Intent intent = new Intent(this, CounterService.class);
 				startService(intent);
@@ -142,7 +138,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		case R.id.advice:
 			vibrate_1s();
-
 			agent.startFeedbackActivity();
 
 		}
@@ -175,12 +170,13 @@ public class MainActivity extends Activity implements OnClickListener {
 
 				float percent = (float) (progress * 1.0) / maxVolume;
 				Intent intent = new Intent(MainActivity.this, PlayService.class);
-				intent.putExtra("tag", AppConstant.THUNDER_VOLUME_CHANGE);
+				intent.putExtra("tag", Const.THUNDER_VOLUME_CHANGE);
 				intent.putExtra("percent", percent);
 				startService(intent);
 
 			}
 		});
+
 		rainBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
@@ -202,7 +198,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 				float percent = (float) (progress * 1.0) / maxVolume;
 				Intent intent = new Intent(MainActivity.this, PlayService.class);
-				intent.putExtra("tag", AppConstant.RAIN_VOLUME_CHANGE);
+				intent.putExtra("tag", Const.RAIN_VOLUME_CHANGE);
 				intent.putExtra("percent", percent);
 				startService(intent);
 
